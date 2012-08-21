@@ -1,5 +1,7 @@
 package main.alg;
 
+import java.awt.geom.FlatteningPathIterator;
+
 import junit.framework.TestCase;
 
 import org.junit.Test;
@@ -136,7 +138,7 @@ public class QuickFindUinon  extends TestCase {
 			}
 		}
 
-		private int root(int p)
+		protected int root(int p)
 		{
 			while(p != array[p]) p = array[p];
 			
@@ -172,6 +174,59 @@ public class QuickFindUinon  extends TestCase {
 			return array[rootQ];
 		}
 	}
+	// Quick Union Path Compression
+	/**
+	 * @author Tomasz.Switek
+	 *
+	 */
+	static class AlgQuickUnionPathCommpresion extends QuickFindUinon.AlgQuickUnionWeighted
+	{
+		
+		private boolean flatType = true;
+		
+		
+		/**
+		 * @param elemCount
+		 * @param flatType : if true then TotalFlat else OneLevelFlat
+		 */
+		public AlgQuickUnionPathCommpresion(int elemCount, boolean flatType) {
+			super(elemCount);
+			this.flatType = flatType;
+		}
+		
+		@Override
+		protected int root(int p)
+		{
+			return flatType ? rootTotalFlat(p) : rootOneLevelFlat(p);
+		}
+		
+		private int rootTotalFlat(int p)
+		{
+			int root = super.root(p);
+			int tmpP;
+			
+			while(p != array[p])
+			{
+				tmpP = p;
+				p = array[p];
+				array[tmpP] = root; 
+			}
+			
+			return root;
+		}
+		private int rootOneLevelFlat(int p)
+		{
+
+			while(p != array[p])
+			{
+				array[p] = array[array[p]];
+				p = array[p];
+			}
+			return p;
+		}
+	}
+	
+	//
 	public static void main(String[] args)
 	{
 		QuickFindUinon uion = new QuickFindUinon();
@@ -236,7 +291,72 @@ public class QuickFindUinon  extends TestCase {
 		algWeighted.connect(9, 1);
 		algWeighted.connect(0, 5);
 		algWeighted.connect(4, 1);
-		algWeighted.connect(2, 6);
+		algWeighted.connect(2, 5);
+		
+
+		algLazy.connect(1, 2);
+		algLazy.connect(3, 4);
+		algLazy.connect(5, 6);
+		algLazy.connect(7, 8);
+		algLazy.connect(7, 9);
+		algLazy.connect(9, 1);
+		algLazy.connect(0, 5);
+		algLazy.connect(4, 1);
+		algLazy.connect(2, 5);
+		
+		assertTrue(maxDepth(algWeighted.array) <= maxDepth(algLazy.array));
+	
+	}
+	@Test
+	public void testQuickUnionTotalFlat() {
+
+		QuickFindUinon.AlgQuickUnionPathCommpresion algTotalFlat = new QuickFindUinon.AlgQuickUnionPathCommpresion(10, true);
+		QuickFindUinon.AlgQuickUnionLazy algLazy = new QuickFindUinon.AlgQuickUnionLazy(10);
+		
+		algTotalFlat.connect(1, 2);
+		algTotalFlat.connect(3, 4);
+		algTotalFlat.connect(5, 6);
+		algTotalFlat.connect(7, 8);
+		algTotalFlat.connect(7, 9);
+		algTotalFlat.connect(9, 1);
+		algTotalFlat.connect(0, 5);
+		algTotalFlat.connect(4, 1);
+		algTotalFlat.connect(2, 5);
+		
+		algTotalFlat.find(1, 5);
+		algTotalFlat.find(3, 0);
+		
+		algLazy.connect(1, 2);
+		algLazy.connect(3, 4);
+		algLazy.connect(5, 6);
+		algLazy.connect(7, 8);
+		algLazy.connect(7, 9);
+		algLazy.connect(9, 1);
+		algLazy.connect(0, 5);
+		algLazy.connect(4, 1);
+		algLazy.connect(2, 5);
+		
+		assertTrue(maxDepth(algTotalFlat.array) <= maxDepth(algLazy.array));
+	
+	}
+	@Test
+	public void testQuickUnionOneLevelFlat() {
+
+		QuickFindUinon.AlgQuickUnionPathCommpresion algOneLevelFlat = new QuickFindUinon.AlgQuickUnionPathCommpresion(10, false);
+		QuickFindUinon.AlgQuickUnionLazy algLazy = new QuickFindUinon.AlgQuickUnionLazy(10);
+		
+		algOneLevelFlat.connect(1, 2);
+		algOneLevelFlat.connect(3, 4);
+		algOneLevelFlat.connect(5, 6);
+		algOneLevelFlat.connect(7, 8);
+		algOneLevelFlat.connect(7, 9);
+		algOneLevelFlat.connect(9, 1);
+		algOneLevelFlat.connect(0, 5);
+		algOneLevelFlat.connect(4, 1);
+		algOneLevelFlat.connect(2, 5);
+		
+		algOneLevelFlat.find(1, 5);
+		algOneLevelFlat.find(3, 0);
 		
 
 		algLazy.connect(1, 2);
@@ -249,7 +369,7 @@ public class QuickFindUinon  extends TestCase {
 		algLazy.connect(4, 1);
 		algLazy.connect(2, 6);
 		
-		assertTrue(maxDepth(algWeighted.array) <= maxDepth(algLazy.array));
+		assertTrue(maxDepth(algOneLevelFlat.array) <= maxDepth(algLazy.array));
 	
 	}
 }
