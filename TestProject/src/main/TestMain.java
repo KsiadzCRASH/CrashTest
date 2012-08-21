@@ -62,7 +62,7 @@ public class TestMain {
 		// What happens if you change 'Integer' to 'Double'
 		// Does thidddddsdasds explain 'methodPreferenceDouble'?
 
-		// Think about why this happens?
+		//d Think about why this happens?
 	//	new A().doStuff(1,Double.valueOf(2));
 	}
 	/**
