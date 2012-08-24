@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<n>10</n>
+<log>
+	<time>123</time>
+	<peer>1</peer>
+	<peer>2</peer>
+</log>
+<log>
+	<time>125</time>
+	<peer>2</peer>
+	<peer>3</peer>
+</log>
+<log>
+	<time>127</time>
+	<peer>3</peer>
+	<peer>4</peer>
+</log>
+<log>
+	<time>128</time>
+	<peer>4</peer>
+	<peer>5</peer>
+</log>
+<log>
+	<time>129</time>
+	<peer>5</peer>
+	<peer>6</peer>
+</log>
+<log>
+	<time>130</time>
+	<peer>7</peer>
+	<peer>8</peer>
+</log>
+<log>
+	<time>131</time>
+	<peer>8</peer>
+	<peer>9</peer>
+</log>
+<log>
+	<time>132</time>
+	<peer>9</peer>
+	<peer>10</peer>
+</log>

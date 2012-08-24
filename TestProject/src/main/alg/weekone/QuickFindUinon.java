@@ -1,4 +1,4 @@
-package main.alg;
+package main.alg.weekone;
 
 import java.awt.geom.FlatteningPathIterator;
 
@@ -126,7 +126,7 @@ public class QuickFindUinon  extends TestCase {
 	// Quick Union Weighted
 	static class AlgQuickUnionWeighted extends Alg 
 	{
-		private int objectCountArray[];
+		protected int objectCountArray[];
 		
 		public AlgQuickUnionWeighted(int elemCount) {
 			super(elemCount);
@@ -183,7 +183,6 @@ public class QuickFindUinon  extends TestCase {
 	{
 		
 		private boolean flatType = true;
-		
 		
 		/**
 		 * @param elemCount
