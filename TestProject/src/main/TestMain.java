@@ -60,9 +60,9 @@ public class TestMain {
 	
 	public void methodPreferenceMore() {
 		// What happens if you change 'Integer' to 'Double'
-		// Does this explain 'methodPreferenceDouble'?
+		// Does thidddddsdasds explain 'methodPreferenceDouble'?
 
-		// Think about why this happens?
+		//d Think about why this happens?
 	//	new A().doStuff(1,Double.valueOf(2));
 	}
 	/**
