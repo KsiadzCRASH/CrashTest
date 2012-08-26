@@ -2,6 +2,8 @@ package main.alg.weekone;
 
 import java.io.File;
 import java.io.IOException;
+import java.net.URISyntaxException;
+import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -9,6 +11,7 @@ import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
 
+import org.junit.Assert;
 import org.junit.Test;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
@@ -24,9 +27,12 @@ public class SocialNerworkConnectivity extends TestCase {
 	{
 		private File file;
 		
-		public XMLReader(String name) {
+		public XMLReader(String name) throws URISyntaxException 
+		{
+			ClassLoader classLoader = Thread.currentThread().getContextClassLoader();
+			URL url = classLoader.getResource(name);
 			
-			 file = new File(name);
+			file = new File(url.toURI());
 		}
 
 		private Document loadFile() throws ParserConfigurationException, SAXException, IOException
@@ -43,79 +49,127 @@ public class SocialNerworkConnectivity extends TestCase {
 			 	
 				return doc;
 		}
-		public List<LogData> readData()
+		public List<LogData> readData() throws AssertionError
 		{
 			Document  doc;
-			List<LogData> resultList;
+			List<LogData> resultList = null;
 
 			try 
 			{
 				doc = loadFile();
 				resultList = new ArrayList<LogData>();
 
-				NodeList logList = doc.getElementsByTagName("log");
+				NodeList rootList = doc.getElementsByTagName("root");
+				Node rootNode = rootList.item(0);
+
+				
+				NodeList logList = ((Element)rootNode).getChildNodes();
 				
 				for(int i=0; i< logList.getLength(); i++)
 				{
 					Node node = logList.item(i);
 					
-					if(node.getNodeType() == Node.ELEMENT_NODE)
+					if(node.getNodeType() == Node.ELEMENT_NODE && node.getNodeName().equals("log"))
 					{
-						Element logElem = (Element)node;
-
-						//-------
-						NodeList logElemList = logElem.getElementsByTagName("first");
-						Element firstNameElement = (Element)logElemList.item(0);
-
-						NodeList textFNList = firstNameElement.getChildNodes();
-						System.out.println("First Name : " + 
-								((Node)textFNList.item(0)).getNodeValue().trim());
-
-						//-------
-						NodeList lastNameList = firstPersonElement.getElementsByTagName("last");
-						Element lastNameElement = (Element)lastNameList.item(0);
-
-						NodeList textLNList = lastNameElement.getChildNodes();
-						System.out.println("Last Name : " + 
-								((Node)textLNList.item(0)).getNodeValue().trim());
-
-						//----
-						NodeList ageList = firstPersonElement.getElementsByTagName("age");
-						Element ageElement = (Element)ageList.item(0);
-
-						NodeList textAgeList = ageElement.getChildNodes();
-						System.out.println("Age : " + 
-								((Node)textAgeList.item(0)).getNodeValue().trim());
-
-						//------
-
-
-					}//end of if clause
-
-
-				}//end of for loop with s var
-
+						
+						// TIME
+						NodeList timeNodeList = ((Element)node).getElementsByTagName("time");
+						Element timeElement = (Element)timeNodeList.item(0);
+						NodeList timeList = timeElement.getChildNodes();
 					
+						System.out.println("Time : " + ((Node)timeList.item(0)).getNodeValue().trim());
+						int time = Integer.parseInt(((Node)timeList.item(0)).getNodeValue());
+						// Peer P
+						NodeList peerNodeList = ((Element)node).getElementsByTagName("peer");
+						
+						Element pPeerElement = (Element)peerNodeList.item(0);
+						NodeList peerElementList = pPeerElement.getChildNodes();
+						
+						System.out.println("P : " + ((Node)peerElementList.item(0)).getNodeValue().trim());
+						
+						int pPeerId = Integer.parseInt(((Node)peerElementList.item(0)).getNodeValue());
+						
+						Element qPeerElement = (Element)peerNodeList.item(1);
+					
+						peerElementList = qPeerElement.getChildNodes();
+						
+						int qPeerId = Integer.parseInt(((Node)peerElementList.item(0)).getNodeValue());
+						
+						System.out.println("Q : " + ((Node)peerElementList.item(0)).getNodeValue().trim());
+						
+						resultList.add(new LogData(time, pPeerId, qPeerId));
+
+					}
+				}
+				
 			}
 			catch (ParserConfigurationException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
+				throw new AssertionError();
 			} catch (SAXException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
+				throw new AssertionError();
 			} catch (IOException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
+				throw new AssertionError();
 			}
 			
 			return resultList;
 		}
 		public int readN()
 		{
+			Document  doc;
+			int result = 0;
+
+			try 
+			{
+				doc = loadFile();
 			
+				NodeList rootList = doc.getElementsByTagName("root");
+				Node rootNode = rootList.item(0);
+				
+				NodeList rootNodesList = ((Element)rootNode).getChildNodes();
+				
+				for(int i=0; i< rootNodesList.getLength(); i++)
+				{
+					Node node = rootNodesList.item(i);
+					
+					if(node.getNodeType() == Node.ELEMENT_NODE && node.getNodeName().equals("n"))
+					{
+						
+						NodeList nElementList = ((Element) node).getChildNodes();
+					
+						System.out.println("Time : " + ((Node)nElementList.item(0)).getNodeValue().trim());
+						result = Integer.parseInt(((Node)nElementList.item(0)).getNodeValue());
+						
+						break;
+					}
+				}
+				
+			}
+			catch (ParserConfigurationException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+				throw new AssertionError();
+			} catch (SAXException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+				throw new AssertionError();
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+				throw new AssertionError();
+			}
+			
+			return result;
 		}
 		
 	}
+	
+	@SuppressWarnings("unused")
 	private static class LogData
 	{
 		private int time;
@@ -129,7 +183,7 @@ public class SocialNerworkConnectivity extends TestCase {
 			this.qPeerId = qPeerId;
 		}
 
-		public int getTime() {
+			public int getTime() {
 			return time;
 		}
 
@@ -163,7 +217,34 @@ public class SocialNerworkConnectivity extends TestCase {
 			super(elemCount, true);
 		}
 		
+		public int findSolution(List<LogData> data)
+		{
+			int result = 0; 
+			
+			for (LogData logData : data) {
+				
+				connect(logData.getpPeerId(), logData.getqPeerId());
+				if(allPeersConnected())
+				{
+					result = logData.time;
+					break;
+				}
+			}
+			
+			return result;
+			
+		}
 		
+		private boolean allPeersConnected()
+		{
+			for (int i = 0; i < objectCountArray.length; i++) {
+				
+				if(objectCountArray[i] == elemtCount) 
+					return true;
+			}
+			
+			return false;
+		}
 	}
 	
 	
@@ -175,14 +256,30 @@ public class SocialNerworkConnectivity extends TestCase {
 
 	// Test-s
 	@Test
-	private void testMain()
+	public void testMain()
 	{
-		XMLReader dataReader = new XMLReader("snc.xml");
-			
+		XMLReader dataReader;
+		
+		try 
+		{
+		
+			dataReader = new XMLReader("resources/weekone/snc.xml");
+		
+		} catch (URISyntaxException e) 
+		{
+			throw new AssertionError();
+		}
+		
+		int elemCount = dataReader.readN();
+		int result=0;
 		List<SocialNerworkConnectivity.LogData> data =  dataReader.readData();
 		
-		SNCQuickUnionFind alg = 
+		SNCQuickUnionFind alg = new SNCQuickUnionFind(elemCount);
 		
+		result = alg.findSolution(data);
+		System.out.println("Result :" + result);
+		
+		assertEquals(result, 134);
 		
 	}
 }

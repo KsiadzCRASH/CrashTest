@@ -11,6 +11,7 @@ public class QuickFindUinon  extends TestCase {
 
 	static class Alg 
 	{
+		protected int elemtCount;
 		protected int [] array;
 		
 		public int[] getArray() {
@@ -23,7 +24,9 @@ public class QuickFindUinon  extends TestCase {
 
 		public Alg(int elemCount)
 		{
-			array = new int[elemCount];
+			this.elemtCount = elemCount;
+			
+			array = new int[this.elemtCount];
 			
 			for (int i = 0; i < elemCount; i++) {
 				array[i] = i;
@@ -160,16 +163,19 @@ public class QuickFindUinon  extends TestCase {
 			int rootQ = root(q);
 			int rootP = root(p);
 			
-			if(objectCountArray[rootQ] < objectCountArray[rootP])
+			if(rootP != rootQ)
 			{
-				array[rootQ] = rootP;
-				objectCountArray[rootP] += objectCountArray[rootQ];
-			}
-			else 
-			{
-				array[rootP] = rootQ;
-				objectCountArray[rootQ] += objectCountArray[rootP];
-			
+				if(objectCountArray[rootQ] < objectCountArray[rootP])
+				{
+					array[rootQ] = rootP;
+					objectCountArray[rootP] += objectCountArray[rootQ];
+				}
+				else 
+				{
+					array[rootP] = rootQ;
+					objectCountArray[rootQ] += objectCountArray[rootP];
+				
+				}
 			}
 			return array[rootQ];
 		}
