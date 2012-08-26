@@ -1,7 +1,5 @@
 package main.alg.weekone;
 
-import java.awt.geom.FlatteningPathIterator;
-
 import junit.framework.TestCase;
 
 import org.junit.Test;
