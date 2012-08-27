@@ -20,7 +20,7 @@ import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 import org.xml.sax.SAXException;
 
-public class SocialNerworkConnectivity extends TestCase {
+public class SocialNerworkConnectivityIE extends TestCase {
 
 	private static class XMLReader 
 	{
@@ -271,7 +271,7 @@ public class SocialNerworkConnectivity extends TestCase {
 		
 		int elemCount = dataReader.readN();
 		int result=0;
-		List<SocialNerworkConnectivity.LogData> data =  dataReader.readData();
+		List<SocialNerworkConnectivityIE.LogData> data =  dataReader.readData();
 		
 		SNCQuickUnionFind alg = new SNCQuickUnionFind(elemCount);
 		

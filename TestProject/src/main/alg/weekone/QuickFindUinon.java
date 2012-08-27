@@ -68,7 +68,7 @@ public class QuickFindUinon  extends TestCase {
 			return count;
 		}
 	}
-	// Tree like str.
+	// Tree structure.
 	private int maxDepth(int [] array)
 	{
 		int maxDepth = 0, depth = 0;
@@ -97,7 +97,7 @@ public class QuickFindUinon  extends TestCase {
 			super(elemCount);
 		}
 
-		private int root(int p)
+		protected int root(int p)
 		{
 			while(p != array[p]) p = array[p];
 			
