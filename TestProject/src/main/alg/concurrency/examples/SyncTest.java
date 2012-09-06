@@ -1,4 +1,4 @@
-package main.alg.concurrency.test1;
+package main.alg.concurrency.examples;
 
 import org.junit.Test;
 
