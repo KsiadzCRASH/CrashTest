@@ -8,7 +8,7 @@ public class LivenessTest extends TestCase{
 
 	static class Deadlock
 	{
-		public Boolean reachedFlag = false;
+		public Boolean reachFlag = false;
 		
 		public synchronized void methodA(Deadlock inst) throws InterruptedException
 		{
@@ -16,7 +16,7 @@ public class LivenessTest extends TestCase{
 			Thread.sleep(100);
 			inst.methodB();
 			
-			reachedFlag = true;
+			reachFlag = true;
 		}
 		public synchronized void methodB()
 		{
@@ -25,7 +25,8 @@ public class LivenessTest extends TestCase{
 	}
 	static class Starwation
 	{
-		
+		public Boolean reachFlag = false;
+			
 	}
 	@Test
 	public void testDeadlock() throws InterruptedException
@@ -70,7 +71,7 @@ public class LivenessTest extends TestCase{
 
 		tA.join(200);
 		
-		assertTrue(!instA.reachedFlag);
-		assertTrue(!instB.reachedFlag);
+		assertTrue(!instA.reachFlag);
+		assertTrue(!instB.reachFlag);
 	}
 }
