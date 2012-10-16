@@ -13,14 +13,71 @@ import java.util.TreeMap;
 
 public class TestMain {
 
+	 
 	private static final int NUMPTS = 100;
 	private int[] data = new int[NUMPTS];
 	
 	{ for(int i = 0; i < NUMPTS; i++) data[i] = i; }
 	
-	public static class Dupa
+	public static class Dupa extends Dupa2
 	{
+		public static int myVarInit(int val, String name)
+		{
+			System.out.println(name);
+			return val;
+		}
+		private int var = myVarInit(2, "DupaVar");
+		static 
+		{
+			//new Dupa2();
+			System.out.println("INIT Dupa");
+		}
+		public static final int bla = myVarInit(2, "DupaSTATICVar");
 		
+		public Dupa()
+		{
+			super();
+			
+			dupa();
+			System.out.println(var+ "DupaVar");
+			System.out.println(getVar() + "DupaGetVar");
+			
+		}
+		@Override
+		public int getVar()
+		{
+			return var;
+		}
+		@Override
+		public void dupa()
+		{
+			System.out.println("Dupa");
+		}
+	}
+	public static class Dupa2
+	{
+		public static final int bla = Dupa.myVarInit(2, "Dupa2STATICVar");
+		
+		private int var = Dupa.myVarInit(12, "Dupa2Var");
+
+		private int var1 = Dupa.myVarInit(23, "Dupa2Var1");
+		public Dupa2()
+		{
+			dupa();
+			System.out.println(var+ "Dupa2Var");
+
+			System.out.println(getVar() + "Dupa2GetVar");
+			
+		}
+		
+		public int getVar()
+		{
+			return var;
+		}
+		public void dupa()
+		{
+			System.out.println("Dupa2" );
+		}
 	}
 
 	class Dupa1
@@ -96,9 +153,19 @@ public class TestMain {
 		Red, Blue, Green, Yellow; // what happens if you add a ; here?
 		// What happens if you type Red() instead?
 	}
+	private static String bla = "S";
+	private static String lol = bla;
 	
 	public static void main(String[] args) throws FileNotFoundException, IOException {
 
+		Dupa d = new Dupa();
+		
+		boolean enabled;
+		assert enabled = true;
+		
+		String blalol = "DDD";
+		
+		String wblalol = "DDD";
 		
 			bla();
 		
