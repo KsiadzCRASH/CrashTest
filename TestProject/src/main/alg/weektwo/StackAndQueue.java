@@ -347,7 +347,7 @@ public class StackAndQueue extends TestCase {
 				data = nData;
 			}
 		}
-		private class QueueIterator<T> implements Iterator<T>
+		private class QueueIteratorArr<E> implements Iterator<E>
 		{
 
 			@Override
@@ -357,7 +357,7 @@ public class StackAndQueue extends TestCase {
 			}
 
 			@Override
-			public T next() {
+			public E next() {
 				// TODO Auto-generated method stub
 				return null;
 			}
@@ -371,9 +371,9 @@ public class StackAndQueue extends TestCase {
 		} 
 
 		@Override
-		public Iterator<T> iterator() {
-			// TODO Auto-generated method stub
-			return null;
+		public Iterator<T> iterator() 
+		{
+			return new QueueIteratorArr<T>();
 		}
 	} 
 	// Stacks	
