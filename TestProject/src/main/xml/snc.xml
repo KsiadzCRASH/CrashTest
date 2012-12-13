@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<root>
+	<elem>
+		<val1>1</val1>
+		<val2>21</val2>
+		<val2>22</val2>
+		<val2>23</val2>
+		<val3>3</val3>
+	</elem>
+	<elem>
+		<val1>1</val1>
+		<val2>21</val2>
+		<val2>22</val2>
+		<val2>23</val2>
+		<val3>3</val3>
+	</elem>
+	<elem>
+		<val1>1</val1>
+		<val2>21</val2>
+		<val2>22</val2>
+		<val2>23</val2>
+		<val3>3</val3>
+	</elem>
+	
+	<elem>
+		<val1>B1</val1>
+	</elem>
+	<elem>
+		<val1>B2</val1>
+	</elem>
+</root>

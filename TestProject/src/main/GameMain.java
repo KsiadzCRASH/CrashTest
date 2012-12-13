@@ -37,6 +37,7 @@ public class GameMain extends Application {
 		
 		gStage.initialize(stage);
 		gStage.show();
+		
 	}
 
 }
