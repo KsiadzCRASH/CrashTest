@@ -1,0 +1,207 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<root>
+
+<!-- BUDOWA KONTA, KARTOTEKI, KOSZTOW-->
+	<elem id="#" name="Dowolna stała">
+        <select specialStr="value">'value'</select>
+        <group specialStr="value">'value'</group>
+        <ordered specialStr="value">'value'</ordered>
+    </elem>
+	<elem id="P" name="Konto ośrodka kosztów">
+        <from type="gmodbiorcy" variable="o">
+            <str>gmodbiorcy o</str>
+        </from>
+         <from type="gmodbiorcy_opk" variable="op">
+            <str>gmodbiorcy_opk op</str>
+        </from>
+        <from type="opk_katal" variable="opk">
+            <str>opk_katal opk</str>
+        </from>
+        <from type="gmokres" variable="ok">
+            <str>gmokres ok</str>
+        </from>
+        <select>opk.opk_symbo</select>
+        <where>o.odb_id = nag.odb_id  AND o.odb_id = op.odb_id AND op.opk_id = opk.opk_id AND op.rok = opk.rok AND op.bid = opk.bid 
+        		AND nag.id_okr = ok.id_okr AND substr(ok.miesrok,3,4) = op.rok AND op.bid = :g_GM_nBid</where>
+        <group>opk.opk_symbo</group>
+        <ordered>opk.opk_symbo</ordered>
+    </elem>
+	<elem id="R" name="Konto relewu">
+        <from type="gmrelewy" variable="rel">
+            <str>gmrelewy rel</str>
+        </from>
+        <select>rel.konto_rel</select>
+        <where> poz.id_rel = rel.id_rel</where>
+        <group>rel.konto_rel</group>
+        <ordered>rel.konto_rel</ordered>
+    </elem>
+	<elem id="G" name="Rodzaje kosztów">
+	  	<from type="gmdostawy" variable="dost">
+            <str>gmdostawy dost</str>
+        </from>
+        <from type="gmsl_korza_koszt" variable="rk">
+            <str>gmsl_korza_koszt rk</str>
+        </from>
+          <from type="gmsl_tow" variable="tow">
+            <str>gmsl_tow tow</str>
+        </from>
+        <from type="gmsl_towlok" variable="tlok">
+            <str>gmsl_towlok tlok</str>
+        </from>
+        <select>rk.rodza_konto</select>
+        <where>rk.rodza_kod = tow.rodza_kod AND tow.id_tow = tlok.id_tow 
+        		AND tlok.id_towlok = dost.id_towlok AND dost.id_dostawy = poz.id_dostawy</where>
+        <group>rk.rodza_konto</group>
+        <ordered>rk.rodza_konto</ordered>
+    </elem> 
+	<elem id="O" name="Konto odbiorcy">
+        <from type="gmodbiorcy" variable="o">
+            <str>gmodbiorcy o</str>
+        </from>
+        <from type="gmsl_kontrah" variable="k">
+            <str>gmsl_kontrah k</str>
+        </from>
+        <select>o.odb_symbo</select>
+        <where>o.odb_id = nag.odb_id</where>
+        <group>o.odb_symbo</group>
+        <ordered>o.odb_symbo</ordered>
+    </elem>    
+	<elem id="K" name="Konto kontrahenta">
+        <from type="gmsl_kontrah" variable="k">
+            <str>gmsl_kontrah k</str>
+        </from>
+        <select>k.konto_kontr</select>
+        <where>k.id_kontr = nag.id_kontr</where>
+        <group>k.konto_kontr</group>
+        <ordered>k.konto_kontr</ordered>
+    </elem>
+	<elem id="M" name="Konto magazynu">
+        <select>m.konto_fk</select>
+        <group>m.konto_fk</group>
+        <ordered>m.konto_fk</ordered>
+    </elem>
+    <elem id="A1" name="Grupa analityczna 1">
+        <from type="gmsl_granali1" variable="a1">
+            <str>gmsl_granali1 a1</str>
+        </from>
+        <from type="gmsl_tow" variable="tow">
+            <str>gmsl_tow tow</str>
+        </from>
+        <from type="gmsl_towlok" variable="tlok">
+            <str>gmsl_towlok tlok</str>
+        </from>
+        <select>a1.anali_konto</select>
+        <where>nag.anali1 = a1.anali_kod and nag.adali1 is not null and tow.anali1 = a1.anaki_kod</where>
+        <group>a1.anali_konto</group>
+        <ordered>a1.anali_konto</ordered>
+    </elem>
+    <elem id="A2"  name="Grupa analityczna 2">
+        <from type="gmsl_granali2" variable="a2">
+            <str>gmsl_granali1 a2</str>
+        </from>
+        <from type="gmsl_tow" variable="tow">
+            <str>gmsl_tow tow</str>
+        </from>
+        <from type="gmsl_towlok" variable="tlok">
+            <str>gmsl_towlok tlok</str>
+        </from>
+        <select>a2.anali_konto</select>
+        <where>nag.anali2 = a2.anali_kod and nag.adali2 is not null and tow.anali2 = a2.anaki_kod</where>
+        <group>a2.anali_konto</group>
+        <ordered>a2.anali_konto</ordered>
+    </elem>
+    <elem id="A3" name="Grupa analityczna 3">
+        <from type="gmsl_granali3" variable="a3">
+            <str>gmsl_granali1 a3</str>
+        </from>
+        <from type="gmsl_tow" variable="tow">
+            <str>gmsl_tow tow</str>
+        </from>
+        <from type="gmsl_towlok" variable="tlok">
+            <str>gmsl_towlok tlok</str>
+        </from>
+        <select>a3.anali_konto</select>
+        <where>nag.anali3 = a3.anali_kod and nag.adali3 is not null and tow.anali3 = a3.anaki_kod</where>
+        <group>a3.anali_konto</group>
+        <ordered>a3.anali_konto</ordered>
+    </elem>
+    <elem id="A4"  name="Grupa analityczna 4">
+        <from type="gmsl_granali4" variable="a4">
+            <str>gmsl_granali1 a4</str>
+        </from>
+        <from type="gmsl_tow" variable="tow">
+            <str>gmsl_tow tow</str>
+        </from>
+        <from type="gmsl_towlok" variable="tlok">
+            <str>gmsl_towlok tlok</str>
+        </from>
+        <select>a4.anali_konto</select>
+        <where>nag.anali4 = a4.anali_kod and nag.adali4 is not null and tow.anali4 = a4.anaki_kod</where>
+        <group>a4.anali_konto</group>
+        <ordered>a4.anali_konto</ordered>
+    </elem>
+       <elem id="A5"  name="Grupa analityczna 5">
+        <from type="gmsl_granali5" variable="a5">
+            <str>gmsl_granali1 a5</str>
+        </from>
+        <from type="gmsl_tow" variable="tow">
+            <str>gmsl_tow tow</str>
+        </from>
+        <from type="gmsl_towlok" variable="tlok">
+            <str>gmsl_towlok tlok</str>
+        </from>
+        <select>a5.anali_konto</select>
+        <where>nag.anali5 = a5.anali_kod and nag.adali5 is not null and tow.anali5 = a5.anaki_kod</where>
+        <group>a5.anali_konto</group>
+        <ordered>a5.anali_konto</ordered>
+    </elem>
+  <!-- EKSPORTUJ WARTOŚCI -->
+    <elemWart id="NETTO" name="Wartość netto">
+        <select specialStr="#">sum( ROUND(ROUND(poz.dp_cena_n*poz.dp_mnoznik,poz.dp_poprzecinku)*poz.dp_ilosc/poz.dp_mnoznik,2) *(#poz.dp_kier_dzial))</select>
+        <having specialStr="#">sum( ROUND(ROUND(poz.dp_cena_n*poz.dp_mnoznik,poz.dp_poprzecinku)*poz.dp_ilosc/poz.dp_mnoznik,2) *(#poz.dp_kier_dzial)) &lt;&gt; 0</having>
+    </elemWart>
+    <elemWart id="NODCHYL" name="Wartość netto z odchyl">
+        <select specialStr="#">sum( (ROUND(ROUND(poz.dp_cena_n*poz.dp_mnoznik,poz.dp_poprzecinku)*poz.dp_ilosc/poz.dp_mnoznik,2) + poz.dp_odchyl_n)*(#poz.dp_kier_dzial))</select>
+        <having specialStr="#">sum( (ROUND(ROUND(poz.dp_cena_n*poz.dp_mnoznik,poz.dp_poprzecinku)*poz.dp_ilosc/poz.dp_mnoznik,2) + poz.dp_odchyl_n)*(#poz.dp_kier_dzial)) &lt;&gt; 0</having>
+    </elemWart>
+    <elemWart id="DOKODCHYL" name="Odchylenie od wartości brutto dok. zew.">
+        <select>sum( (wart_brutto - dn_wart_nett - dn_wart_vat ) *(-1))</select>
+        <having>sum( (wart_brutto - dn_wart_nett - dn_wart_vat ) *(-1)) &lt;&gt; 0</having>
+    </elemWart>
+    <elemWart id="DOKWARTB" name="Wartość brutto dok. zew.">
+        <select>sum( (nag.dn_wart_nett + nag.dn_wart_vat ) *(-1))</select>
+        <having>sum( (nag.dn_wart_nett + nag.dn_wart_vat ) *(-1)) &lt;&gt; 0</having>
+    </elemWart>
+    <elemWart id="ODCHYL" name="Wartość odchyleń">
+        <select specialStr="#">sum( poz.dp_odchyl_n*(#poz.dp_kier_dzial))</select>
+        <having specialStr="#">sum( poz.dp_odchyl_n*(#poz.dp_kier_dzial)) &lt;&gt; 0</having>
+    </elemWart>
+     <elemWart id="BRUTTO" name="Wartość brutto">
+        <select specialStr="#">sum( (ROUND(ROUND(poz.dp_cena_n*poz.dp_mnoznik,poz.dp_poprzecinku)*poz.dp_ilosc/poz.dp_mnoznik,2)+poz.dp_odchyl_n + poz.wart_vat)*(#poz.dp_kier_dzial))</select>
+        <having specialStr="#">sum( (ROUND(ROUND(poz.dp_cena_n*poz.dp_mnoznik,poz.dp_poprzecinku)*poz.dp_ilosc/poz.dp_mnoznik,2)+poz.dp_odchyl_n + poz.wart_vat)*(#poz.dp_kier_dzial)) &lt;&gt; 0</having>
+    </elemWart>
+    <elemWart id="VAT" name="Wartość VAT">
+        <select specialStr="#">sum( poz.wart_vat *(#poz.dp_kier_dzial))</select>
+        <where specialStr="value">poz.dp_vat in (value)</where>
+        <having specialStr="#">sum( poz.wart_vat *(#poz.dp_kier_dzial)) &lt;&gt; 0</having>
+    </elemWart>
+    <!-- EKSPORTUJ MAGAZYNY -->
+    <elemMag id="MAG" name="Magazyny">
+        <where specialStr="value">>m.id_mag in (value)</where>
+    </elemMag>
+    <!-- EKSPORTUJ DOKUMENTY -->
+    <elemDok id="DOK" name="Dokumenty">
+        <where specialStr="value">nag.id_drodz in (value)</where>
+    </elemDok>
+   <!-- TYP EKSPORTU -->
+    <elemTyp> id="ALL_RW" name="Eksportuj wszystkie rozchody">
+    </elemTyp>
+    <elemTyp> id="DARY_TAK" name="Eksport darów">
+        <where specialStr="value"> EXISTS ( SELECT 	1 FROM 	gmdostawy d WHERE 	d.id_dostawy=poz.id_dostawy AND  SYSADM.AP_DOSTAWA.CZY_DARY(d.id_przychodu) = 1) </where>
+    </elemTyp>
+    <elemTyp> id="DARY_NIE" name="Eksportuj bez darów">
+        <where specialStr="value"> EXISTS ( SELECT 	1 FROM 	gmdostawy d WHERE 	d.id_dostawy=poz.id_dostawy AND  SYSADM.AP_DOSTAWA.CZY_DARY(d.id_przychodu) = 0) </where>
+    </elemTyp>
+</root>
+	
+	

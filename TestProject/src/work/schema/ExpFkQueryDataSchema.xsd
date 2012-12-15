@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<xs:schema id="ExpFkQueryDataSchema" xmlns="" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+
+<xs:element name="root" type="ExpFkXmlQueryXO">
+		
+</xs:element>
+	
+	<xs:complexType name="ExpFkXmlQueryXO">
+	
+		<xs:sequence>
+			<xs:element name="elem" type="ExpFkXmlQueryElemXO"
+				maxOccurs="unbounded" minOccurs="0">
+			</xs:element>
+			
+			<xs:element name="elemWart" type="ExpFkXmlQueryElemXO"
+				maxOccurs="unbounded" minOccurs="0">
+			</xs:element>
+			
+			<xs:element name="elemMag" type="ExpFkXmlQueryElemXO"
+				maxOccurs="1" minOccurs="0">
+			</xs:element>
+			
+			<xs:element name="elemDok" type="ExpFkXmlQueryElemXO"
+				maxOccurs="1" minOccurs="0">
+			</xs:element>
+			
+			<xs:element name="elemTyp" type="ExpFkXmlQueryElemXO"
+				maxOccurs="unbounded" minOccurs="0">
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	
+	<xs:complexType name="ExpFkXmlQueryElemXO">
+		<xs:sequence>
+			<xs:element name="from" type="ExpFkXmlQueryElemPartXO"
+				maxOccurs="unbounded" minOccurs="0">
+			</xs:element>
+			<xs:element name="select" type="StrExpFkXO" minOccurs="0" maxOccurs="1"/>
+			<xs:element name="where" type="StrExpFkXO" minOccurs="0" maxOccurs="1"/>
+			<xs:element name="group" type="StrExpFkXO" minOccurs="0" maxOccurs="1"/>
+			<xs:element name="having" type="StrExpFkXO" minOccurs="0" maxOccurs="1"/>
+			<xs:element name="ordered" type="StrExpFkXO" minOccurs="0" maxOccurs="1"/>
+		</xs:sequence>
+	
+		<xs:attribute name="id" type="xs:string" />
+		<xs:attribute name="name" type="xs:string" />
+		
+	</xs:complexType>	
+	<xs:complexType name="ExpFkXmlQueryElemPartXO">
+			<xs:sequence>
+					<xs:element name="str" type="StrExpFkXO" />
+			</xs:sequence>
+			<xs:attribute name="type" type="xs:string" />
+			<xs:attribute name="variable" type="xs:string" />
+	</xs:complexType>
+	
+	<xs:complexType name="StrExpFkXO">
+			<xs:simpleContent>
+				<xs:extension base="xs:string">
+					<xs:attribute name="specialStr" type="xs:string" use="optional"/>
+	            </xs:extension>
+			</xs:simpleContent>	
+			
+	</xs:complexType>
+
+</xs:schema>
