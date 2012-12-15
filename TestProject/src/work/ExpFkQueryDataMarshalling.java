@@ -16,6 +16,7 @@ import javax.xml.bind.JAXBElement;
 import work.marshalling.WMarshalling;
 import work.marshalling.WMarshallingAbstract;
 import work.marshalling.WMarshalling;
+import work.marshalling.WMarshallingException;
 
 /**
  * @author Tomasz.Switek

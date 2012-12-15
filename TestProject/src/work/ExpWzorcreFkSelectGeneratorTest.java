@@ -69,7 +69,7 @@ public class ExpWzorcreFkSelectGeneratorTest extends TestCase {
 		ExpFkXmlQueryXO root;
 		try {
 			//
-			root = expFkQueryMarshalling.loadAndUnmarshall("pl/asseco/amms/services/apteka/schema/data/ExpFkQueryData.xml");
+			root = expFkQueryMarshalling.loadAndUnmarshall("work/schema/data/ExpFkQueryData.xml");
 			assertNotNull(root);	
 			
 		} catch (WMarshallingException e) {

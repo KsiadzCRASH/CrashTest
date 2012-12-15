@@ -22,8 +22,8 @@ public class ExpWzorcreFkSchemaParserTest extends TestCase {
 	@Test
 	public void testPath()
 	{
-		String filName1 = "D:\\repo\\Implementacja\\trunk\\amms\\server\\src\\main\\resources\\pl\\asseco\\amms\\services\\apteka\\schema\\data\\ExpFkQueryData.xml";
-		String filName2 = "pl/asseco/amms/services/apteka/schema/data/ExpFkQueryData.xml";
+		String filName1 = "services\\apteka\\schema\\data\\ExpFkQueryData.xml";
+		String filName2 = "work/schema/data/ExpFkQueryData.xml";
 		
 	
 		ClassLoader classLoader = Thread.currentThread().getContextClassLoader();
