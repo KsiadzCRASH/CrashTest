@@ -4,6 +4,7 @@
 package work;
 
 import java.net.URISyntaxException;
+import java.net.URL;
 
 import junit.framework.TestCase;
 
@@ -13,15 +14,13 @@ import work.GmExpPozTO.SchemaParser;
 import work.GmExpPozTO.SelectGenerator;
 import work.marshalling.WMarshallingException;
 
-/**
- * @author Tomasz.Switek
- *
- */
 
 public class ExpWzorcreFkSelectGeneratorTest extends TestCase {
 
-	ExpFkQueryDataMarshalling expFkQueryMarshalling;
+	private static ExpFkQueryDataMarshalling expFkQueryMarshalling = new ExpFkQueryDataMarshalling("work");
 
+	private static ApExpServiceMock apServiceMock = new ApExpServiceMock();
+	
 	@Test
 	public void testXmlMarshallingTest() 
 	{
@@ -40,7 +39,7 @@ public class ExpWzorcreFkSelectGeneratorTest extends TestCase {
 		strhXO.setValue("having");
 		stroXO.setValue("order");
 		
-		root.getElem().add(elem);
+		root.getElemBud().add(elem);
 		elem.setId("id");
 		elem.setSelect(strXO);
 		elem.setWhere(strwXO);
@@ -61,6 +60,19 @@ public class ExpWzorcreFkSelectGeneratorTest extends TestCase {
 			e.printStackTrace();
 		}		
 		
+	}
+	@Test
+	public void testPath()
+	{
+		String filName1 = "services\\apteka\\schema\\data\\ExpFkQueryData.xml";
+		String filName2 = "work/schema/data/ExpFkQueryData.xml";
+		
+	
+		ClassLoader classLoader = Thread.currentThread().getContextClassLoader();
+    	URL url = classLoader.getResource(filName1);
+    	url = classLoader.getResource(filName2);
+		
+    	assertNotNull(url);
 	}
 	@Test
 	public void testXmlUnmarshallingTest() 
@@ -108,6 +120,23 @@ public class ExpWzorcreFkSelectGeneratorTest extends TestCase {
 	}	
 
 	// SCHEMA TO GMEXPPOZTO 
+	@Test
+	public void testQueryGeneratorTest() 
+	{
+		GmExpPozTO expPoz = new GmExpPozTO();
+		String testSchema = "@~A4~O~#666#~SW@VAT;0;5;DARY_NIE;@84;^0;@@~K~F~#777#@0@";
+		SchemaParser parser = new SchemaParser();
+		String result;
+		
+		parser.convertSchemaToData(expPoz, testSchema);
+	
+		result = apServiceMock.generateQuery(expPoz);
+		
+		assertEquals("", result.toString());
+	
+	}
+	
+	
 	@Test
 	public void testParserOpisTest()
 	{

@@ -15,7 +15,6 @@ import javax.xml.bind.JAXBElement;
 
 import work.marshalling.WMarshalling;
 import work.marshalling.WMarshallingAbstract;
-import work.marshalling.WMarshalling;
 import work.marshalling.WMarshallingException;
 
 /**
@@ -25,6 +24,11 @@ import work.marshalling.WMarshallingException;
 public class ExpFkQueryDataMarshalling extends WMarshallingAbstract<ExpFkXmlQueryXO>
 									 implements WMarshalling<ExpFkXmlQueryXO> 
 {
+	// FOR TEST ONLY !!!
+	public ExpFkQueryDataMarshalling(String contextPath)
+	{
+		this.contextPath = contextPath;
+	}
 	@Override
 	protected JAXBElement<ExpFkXmlQueryXO> getRootElement(ExpFkXmlQueryXO rootContent) 
 	{
@@ -68,4 +72,5 @@ public class ExpFkQueryDataMarshalling extends WMarshallingAbstract<ExpFkXmlQuer
 
 	    return stringBuilder.toString();
 	}
+
 }

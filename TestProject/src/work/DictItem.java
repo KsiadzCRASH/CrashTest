@@ -1,6 +1,5 @@
 package work;
 
-import java.beans.Transient;
 import java.io.Serializable;
 
 
@@ -199,13 +198,6 @@ public class DictItem implements Serializable, Cloneable {
         this.grupa = grupa;
     }
 
-    public DictItemData getDiData() {
-        return diData;
-    }
-
-    public void setDiData(DictItemData diData) {
-        this.diData = diData;
-    }
 }
 
  

@@ -5,10 +5,7 @@ package work;
 
 import java.util.ArrayList;
 import java.util.List;
-/**
- * @author Tomasz.Switek
- *
- */
+
 public class GmExpPozTO  {
 	
 	private static final long serialVersionUID = 1L;
@@ -33,6 +30,11 @@ public class GmExpPozTO  {
 	
 	private List<DictItem> magList;
 	private List<DictItem> dokRodzList;
+	
+	public Boolean zmienZnak()
+	{
+		return gmExpPoz != null && gmExpPoz.getZmienZnak().getValue() == 0;
+	}
 	
 	public String getExpTypDokMM() {
 		return expTypDokMM;

@@ -1,13 +1,36 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <root>
-
+<!-- STRUKTURA PODSTAWOWA -->
+	<elemStr id="STR" name="Struktura podstawowa">
+        <from type="gmsl_mag" variable="m">
+            <str>gmsl_mag m</str>
+        </from>
+        <from type="gmsl_miejscskl" variable="ms">
+            <str>gmsl_miejscskl ms</str>
+        </from>
+        <from type="gmdoknag" variable="nag">
+            <str>gmdoknag nag</str>
+        </from>
+		<from type="gmdokpoz" variable="poz">
+            <str>gmdokpoz poz</str>
+        </from>
+  		<from type="gmsl_dokrodz" variable="dr">
+            <str>gmsl_dokrodz dr</str>
+        </from>
+        <select >SELECT nag.dn_id as numTemp </select>
+        <into>INTO :strKonto_Exp, :strKonto_Szcz, :strKarto_Exp, :strSymbol_Kontr, :srtSymbol_Opk, :numTemp, :strWartosc_Exp </into>
+        <where>WHERE poz.dn_id = nag.dn_id AND poz.dp_fl_ksg = 'Z' AND dr.id_drodz = nag.id_drodz AND nag.dn_fl_ksg = 'Z' AND poz.id_ms = ms.id_ms AND ms.id_mag = m.id_mag </where>
+        <group>GROUP BY</group>
+        <having>HAVING</having>
+        <ordered>ORDER BY</ordered>
+    </elemStr>
 <!-- BUDOWA KONTA, KARTOTEKI, KOSZTOW-->
-	<elem id="#" name="Dowolna stała">
+	<elemBud id="#" name="Dowolna stała">
         <select specialStr="value">'value'</select>
         <group specialStr="value">'value'</group>
         <ordered specialStr="value">'value'</ordered>
-    </elem>
-	<elem id="P" name="Konto ośrodka kosztów">
+    </elemBud>
+	<elemBud id="P" name="Konto ośrodka kosztów">
         <from type="gmodbiorcy" variable="o">
             <str>gmodbiorcy o</str>
         </from>
@@ -25,8 +48,8 @@
         		AND nag.id_okr = ok.id_okr AND substr(ok.miesrok,3,4) = op.rok AND op.bid = :g_GM_nBid</where>
         <group>opk.opk_symbo</group>
         <ordered>opk.opk_symbo</ordered>
-    </elem>
-	<elem id="R" name="Konto relewu">
+    </elemBud>
+	<elemBud id="R" name="Konto relewu">
         <from type="gmrelewy" variable="rel">
             <str>gmrelewy rel</str>
         </from>
@@ -34,8 +57,8 @@
         <where> poz.id_rel = rel.id_rel</where>
         <group>rel.konto_rel</group>
         <ordered>rel.konto_rel</ordered>
-    </elem>
-	<elem id="G" name="Rodzaje kosztów">
+    </elemBud>
+	<elemBud id="G" name="Rodzaje kosztów">
 	  	<from type="gmdostawy" variable="dost">
             <str>gmdostawy dost</str>
         </from>
@@ -53,8 +76,8 @@
         		AND tlok.id_towlok = dost.id_towlok AND dost.id_dostawy = poz.id_dostawy</where>
         <group>rk.rodza_konto</group>
         <ordered>rk.rodza_konto</ordered>
-    </elem> 
-	<elem id="O" name="Konto odbiorcy">
+    </elemBud> 
+	<elemBud id="O" name="Konto odbiorcy">
         <from type="gmodbiorcy" variable="o">
             <str>gmodbiorcy o</str>
         </from>
@@ -65,8 +88,8 @@
         <where>o.odb_id = nag.odb_id</where>
         <group>o.odb_symbo</group>
         <ordered>o.odb_symbo</ordered>
-    </elem>    
-	<elem id="K" name="Konto kontrahenta">
+    </elemBud>    
+	<elemBud id="K" name="Konto kontrahenta">
         <from type="gmsl_kontrah" variable="k">
             <str>gmsl_kontrah k</str>
         </from>
@@ -74,87 +97,72 @@
         <where>k.id_kontr = nag.id_kontr</where>
         <group>k.konto_kontr</group>
         <ordered>k.konto_kontr</ordered>
-    </elem>
-	<elem id="M" name="Konto magazynu">
+    </elemBud>
+	<elemBud id="M" name="Konto magazynu">
         <select>m.konto_fk</select>
         <group>m.konto_fk</group>
         <ordered>m.konto_fk</ordered>
-    </elem>
-    <elem id="A1" name="Grupa analityczna 1">
+    </elemBud>
+    <elemBud id="A1" name="Grupa analityczna 1">
         <from type="gmsl_granali1" variable="a1">
             <str>gmsl_granali1 a1</str>
         </from>
         <from type="gmsl_tow" variable="tow">
             <str>gmsl_tow tow</str>
         </from>
-        <from type="gmsl_towlok" variable="tlok">
-            <str>gmsl_towlok tlok</str>
-        </from>
         <select>a1.anali_konto</select>
         <where>nag.anali1 = a1.anali_kod and nag.adali1 is not null and tow.anali1 = a1.anaki_kod</where>
         <group>a1.anali_konto</group>
         <ordered>a1.anali_konto</ordered>
-    </elem>
-    <elem id="A2"  name="Grupa analityczna 2">
+    </elemBud>
+    <elemBud id="A2"  name="Grupa analityczna 2">
         <from type="gmsl_granali2" variable="a2">
             <str>gmsl_granali1 a2</str>
         </from>
         <from type="gmsl_tow" variable="tow">
             <str>gmsl_tow tow</str>
         </from>
-        <from type="gmsl_towlok" variable="tlok">
-            <str>gmsl_towlok tlok</str>
-        </from>
         <select>a2.anali_konto</select>
         <where>nag.anali2 = a2.anali_kod and nag.adali2 is not null and tow.anali2 = a2.anaki_kod</where>
         <group>a2.anali_konto</group>
         <ordered>a2.anali_konto</ordered>
-    </elem>
-    <elem id="A3" name="Grupa analityczna 3">
+    </elemBud>
+    <elemBud id="A3" name="Grupa analityczna 3">
         <from type="gmsl_granali3" variable="a3">
             <str>gmsl_granali1 a3</str>
         </from>
         <from type="gmsl_tow" variable="tow">
             <str>gmsl_tow tow</str>
         </from>
-        <from type="gmsl_towlok" variable="tlok">
-            <str>gmsl_towlok tlok</str>
-        </from>
         <select>a3.anali_konto</select>
         <where>nag.anali3 = a3.anali_kod and nag.adali3 is not null and tow.anali3 = a3.anaki_kod</where>
         <group>a3.anali_konto</group>
         <ordered>a3.anali_konto</ordered>
-    </elem>
-    <elem id="A4"  name="Grupa analityczna 4">
+    </elemBud>
+    <elemBud id="A4"  name="Grupa analityczna 4">
         <from type="gmsl_granali4" variable="a4">
             <str>gmsl_granali1 a4</str>
         </from>
         <from type="gmsl_tow" variable="tow">
             <str>gmsl_tow tow</str>
         </from>
-        <from type="gmsl_towlok" variable="tlok">
-            <str>gmsl_towlok tlok</str>
-        </from>
         <select>a4.anali_konto</select>
         <where>nag.anali4 = a4.anali_kod and nag.adali4 is not null and tow.anali4 = a4.anaki_kod</where>
         <group>a4.anali_konto</group>
         <ordered>a4.anali_konto</ordered>
-    </elem>
-       <elem id="A5"  name="Grupa analityczna 5">
+    </elemBud>
+    <elemBud id="A5"  name="Grupa analityczna 5">
         <from type="gmsl_granali5" variable="a5">
             <str>gmsl_granali1 a5</str>
         </from>
         <from type="gmsl_tow" variable="tow">
             <str>gmsl_tow tow</str>
         </from>
-        <from type="gmsl_towlok" variable="tlok">
-            <str>gmsl_towlok tlok</str>
-        </from>
         <select>a5.anali_konto</select>
         <where>nag.anali5 = a5.anali_kod and nag.adali5 is not null and tow.anali5 = a5.anaki_kod</where>
         <group>a5.anali_konto</group>
         <ordered>a5.anali_konto</ordered>
-    </elem>
+    </elemBud>
   <!-- EKSPORTUJ WARTOŚCI -->
     <elemWart id="NETTO" name="Wartość netto">
         <select specialStr="#">sum( ROUND(ROUND(poz.dp_cena_n*poz.dp_mnoznik,poz.dp_poprzecinku)*poz.dp_ilosc/poz.dp_mnoznik,2) *(#poz.dp_kier_dzial))</select>

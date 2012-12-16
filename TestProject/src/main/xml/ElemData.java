@@ -5,8 +5,6 @@ import java.util.List;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
 
-import main.xml.XmlReader.RootElem.Part;
-
 @XmlRootElement(name = "root")
 public class ElemData {
 	@XmlElement(name = "val1")

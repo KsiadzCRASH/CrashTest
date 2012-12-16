@@ -19,19 +19,7 @@ import work.GmExpPozTO.SchemaParser;
 public class ExpWzorcreFkSchemaParserTest extends TestCase {
 
 	// GMEXPPOZTO TO SCHEMA
-	@Test
-	public void testPath()
-	{
-		String filName1 = "services\\apteka\\schema\\data\\ExpFkQueryData.xml";
-		String filName2 = "work/schema/data/ExpFkQueryData.xml";
-		
-	
-		ClassLoader classLoader = Thread.currentThread().getContextClassLoader();
-    	URL url = classLoader.getResource(filName1);
-    	url = classLoader.getResource(filName2);
-		
-    	assertNotNull(url);
-	}
+
 	
 	@Test
 	public void testConvertDataToSchemaTest()
