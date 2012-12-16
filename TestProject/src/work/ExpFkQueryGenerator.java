@@ -271,11 +271,14 @@ public class ExpFkQueryGenerator
 			result = new StringBuilder();
 			result.append(select);
 			result.append(ls);
+			
 			result.append(into);
 			result.append(ls);
+			
 			result.append("FROM");
 			result.append(from.substring(2));
 			result.append(ls);
+			
 			result.append(where);
 			
 			if(group.length() > 0)
