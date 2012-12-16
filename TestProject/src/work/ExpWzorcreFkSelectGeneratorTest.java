@@ -124,7 +124,7 @@ public class ExpWzorcreFkSelectGeneratorTest extends TestCase {
 	public void testQueryGeneratorTest() 
 	{
 		GmExpPozTO expPoz = new GmExpPozTO();
-		String testSchema = "@~A4~O~#666#~SW@VAT;0;5;DARY_NIE;@84;^0;@@~K~F~#777#@0@";
+		String testSchema = "@~K~#-#~M~SW@NETTO;ALL_RW;@1;^1;@~M~#4444#~SW@~#000#@@~K~M~#999#~SW@";
 		SchemaParser parser = new SchemaParser();
 		String result;
 		

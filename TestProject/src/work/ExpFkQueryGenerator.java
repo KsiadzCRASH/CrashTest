@@ -228,13 +228,13 @@ public class ExpFkQueryGenerator
 		   appendElem(where, root.getWhere(), null);
 		   
 		   group = new StringBuilder();
-		   appendElem(group, root.getGroup(), null);
+		   //appendElem(group, root.getGroup(), null);
 		   
 		   having = new StringBuilder();
-		   appendElem(having, root.getHaving(), null);
+		   //appendElem(having, root.getHaving(), null);
 		   
 		   ordered = new StringBuilder();
-		   appendElem(ordered, root.getOrdered(), null);
+		   //appendElem(ordered, root.getOrdered(), null);
 		} 
 		
 		private void append(StringBuilder str, String data)
@@ -274,24 +274,24 @@ public class ExpFkQueryGenerator
 			result.append(into);
 			result.append(ls);
 			result.append("FROM");
-			result.append(from.substring(1));
+			result.append(from.substring(2));
 			result.append(ls);
 			result.append(where);
 			
-			if(!group.toString().equals(root.getGroup()))
+			if(group.length() > 0)
 			{
 				result.append(ls);
-				result.append(group.substring(1));
+				result.append(root.getGroup().getValue() +" "+ group.substring(2));
 			}
-			if(!having.toString().equals(root.getHaving()))
+			if(having.length() > 0)
 			{
 				result.append(ls);
-				result.append(having.substring(1));
+				result.append(root.getHaving().getValue() +" "+ having.substring(2));
 			}
-			if(!ordered.toString().equals(root.getOrdered()))
+			if(ordered.length() > 0)
 			{
 				result.append(ls);
-				result.append(ordered.substring(1));
+				result.append(root.getOrdered().getValue() +" "+ ordered.substring(2));
 			}
 		}
 		@Override
